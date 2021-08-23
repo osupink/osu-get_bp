@@ -60,13 +60,9 @@ if (!empty($_GET['user'])) {
 		header('HTTP/1.1 301 Moved Permanently');
 		header("Location:http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}?user=$user&limit=$limit&mode=$mode");
 	}
-	/*
-	112,114,115:这里的修改是为了减轻单个玩家的不同数量bp被重复缓存，因得到全部100张bp的性能损失较小，且可以提高缓存命中率及获取速度，故将get_bp的$limit固定为100，$i<count($bp)改为$i<$bplimit.
-	*/
-	if ($bp=get_bp($user,$mode,100)) {
+	if ($bp=get_bp($user,$mode,$limit)) {
 		echo "<script>\nfunction alldownload(name) {\nname=document.getElementsByName(name);\nfor (var i=0;i<name.length;i++) {\nvar iframe=document.createElement('iframe');\niframe.src=name[i].href;\niframe.style.display=\"none\";\ndocument.getElementsByTagName('p')[i].appendChild(iframe);\n}\n}\n</script>\n<p><button onclick=\"alldownload('osu');\">批量下载</button> <button onclick=\"alldownload('sayobot');\">批量下载 (Sayobot)</button></p>\n";
-		$bplimit=(count($bp)<$limit) ? count($bp) : $limit;
-		for ($i=0;$i<$bplimit;$i++) {
+		for ($i=0;$i<count($bp);$i++) {
 			$now=$i+1;
 			$bmid=$bp[$i]['beatmap_id'];
 			$bms=getbeatmapinfo("b={$bmid}","beatmap_id = {$bmid}",0,1,1,1,1);
