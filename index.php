@@ -39,7 +39,6 @@ osu!mania：<input type="radio" name="mode" value="3">
 <?php
 error_reporting(1);
 set_time_limit(300);
-ignore_user_abort(1);
 require_once('config.php');
 require_once('../BanYouBot/botconfig.php');
 require_once('../BanYouBot/apis/bmcacheLib.php');
@@ -88,6 +87,8 @@ if (!empty($_GET['user'])) {
 			$countkatu=$bp[$i]['countkatu'];
 			$countgeki=$bp[$i]['countgeki'];
 			echo "<p>".$now."、<img src=\"https://s.ppy.sh/images/$rank".'_small.png'."\"> $artist - $title [$version]".$perfect."PP:$pp Combo:$maxcombo Score:$score countmiss:$countmiss count50:$count50 count100:$count100 count300:$count300 countkatu:$countkatu countgeki:$countgeki Date:$date <a href=\"https://osu.ppy.sh/b/$bmid\">谱面地址</a> <a name=\"osu\" href=\"https://osu.ppy.sh/d/$bmdid\">下载地址</a> <a name=\"sayobot\" href=\"https://txy1.sayobot.cn/beatmaps/download/$bmdid\">下载地址 (Sayobot)</a></p>\n";
+			ob_flush();
+			flush();
 		}
 	} else {
 		echo "<p>找不到该账号.</p>\n";
