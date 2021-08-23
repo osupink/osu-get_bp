@@ -10,6 +10,8 @@ if (!isset($_GET['b'])) {
 $bmid=(int)$_GET['b'];
 if (!getbeatmapinfo("b={$bmid}","beatmap_id = {$bmid}",0,1,1,1,1)) {
 	$beatmaps=[];
+} elseif (count($beatmaps) > 0) {
+	$beatmaps[0]['bmdid']=$beatmaps[0]['beatmapset_id'];
 }
 echo json_encode($beatmaps,JSON_NUMERIC_CHECK);
 ?>
